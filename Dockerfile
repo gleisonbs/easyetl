@@ -4,8 +4,8 @@ WORKDIR /app
 
 RUN apt update
 RUN apt -y install pipenv
+
+RUN pipenv shell
 RUN pipenv install --dev
 
 COPY . .
-
-CMD ["python", "app.py"]
