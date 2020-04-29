@@ -13,6 +13,7 @@ node {
     }
     stage('Unit Tests') {
         app.inside {
+            sh 'source $(pipenv --venv)/bin/activate'
             sh 'python -m pytest tests/unit/'
         }
     }
