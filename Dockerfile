@@ -4,7 +4,7 @@ WORKDIR /app
 
 RUN apt update
 RUN apt -y install pipenv
-RUN pipenv install
+RUN pipenv install --dev
 
 COPY . .
 
