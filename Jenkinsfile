@@ -13,6 +13,7 @@ node {
         docker.withRegistry('http://index.docker.io/v1', 'dockerhub') {
             def easyetlImage = docker.build("gleisonbs/easyetl:${commit_id}")
             easyetlImage.push()
+            easyetlImage.push('latest')
         }
     }
 
