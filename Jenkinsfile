@@ -1,23 +1,24 @@
 node {
-    checkout scm
+    def app
     properties(
         [
             pipelineTriggers([pollSCM('*/5 * * * *')])
         ]        
     )
-    def easyetlImage = docker.build("gleisonbs/easyetl")
-    stage('Preparation') {
-        sh "git rev-parse --short HEAD > .git/commit-id"
-        commit_id = readFile('.git/commit-id').trim()
+    stage('Clone Repository') {
+        checkout scm
+    }
+    stage('Build Image') {
+        app = docker.build("gleisonbs/easyetl")
     }
     stage('Unit Tests') {
-        docker.inside {
+        app.inside {
             sh 'python -m pytest tests/unit/'
         }
     }
     stage('Docker build/push') {
         docker.withRegistry('http://index.docker.io/v1', 'dockerhub') {
-            easyetlImage.push(commit_id)
+            easyetlImage.push("${env.BUILD_NUMBER}")
             easyetlImage.push('latest')
         }
     }
