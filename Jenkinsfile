@@ -18,8 +18,8 @@ node {
     }
     stage('Docker build/push') {
         docker.withRegistry('http://index.docker.io/v1', 'dockerhub') {
-            easyetlImage.push("${env.BUILD_NUMBER}")
-            easyetlImage.push('latest')
+            app.push("${env.BUILD_NUMBER}")
+            app.push('latest')
         }
     }
 
