@@ -2,9 +2,8 @@ FROM python:3.8.2-buster
 
 WORKDIR /app
 
-RUN apt update
-RUN apt -y install pipenv
+COPY requirements.txt .
 
-RUN pipenv install --dev
+RUN pip install -r requirements.txt
 
 COPY . .
